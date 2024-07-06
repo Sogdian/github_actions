@@ -1,20 +1,21 @@
 # Простой workflow для развёртывания статического содержимого на GitHub Pages
+# имя описываемого процесса
 name: Deploy static content to Pages
-on:
+on: #Секция on отвечает за то, когда запускать процесс
   # Триггером выступает push в ветку master
   push:
     branches: ['master']
   # Позволяет запустить этот рабочий процесс вручную на вкладке Actions tab
   workflow_dispatch:
-  
+
 # Устанавливает права GITHUB_TOKEN, чтобы разрешить развёртывание на GitHub Pages
 permissions:
   contents: read # Мы разрешаем читать контент из нашего репозитория
   pages: write # разрешаем перезаписывать github page
   id-token: write # Разрешаем использовать GITHUB_TOKEN
 
-jobs: # Секция jobs определяет этапы процесса
- 
+jobs: # Секция jobs определяет этапы процесса #Ключ jobs объединяет именованные блоки команд — задачи, которые будут выполняться при запуске workflow
+
   deploy:  # Создаётся одна задача deploy, имя может быть любым
     runs-on: ubuntu-latest # Определяет, в каком окружении будут запущены все команды этой задачи
     steps: # Перечень шагов, команд, которые будут выполнены в этом блоке
@@ -29,7 +30,7 @@ jobs: # Секция jobs определяет этапы процесса
         run: npm ci # В ключе run хранится команда, которая будет выполнена в терминале окружения на раннере.
       - name: Build # Шаг сборки приложения
         run: npm run build # Команда для сборки приложения из вашего блока scripts
-      - name: Setup Pages # Шаг конфигурации сборки 
+      - name: Setup Pages # Шаг конфигурации сборки
         uses: actions/configure-pages@v4 # Используется готовый actions
       - name: Upload artifact # Загружаем артефакты
         uses: actions/upload-pages-artifact@v3
